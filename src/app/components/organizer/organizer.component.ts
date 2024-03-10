@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {DateService} from "../../shared/date.service";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {MomentPipe} from "../../shared/moment.pipe";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TasksService} from "../../shared/tasks.service";
 import {Task} from "../../../types/organizer.interface";
+import {Observable, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-organizer',
@@ -13,7 +14,9 @@ import {Task} from "../../../types/organizer.interface";
     AsyncPipe,
     MomentPipe,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf,
+    NgForOf
   ],
   templateUrl: './organizer.component.html',
   styleUrl: './organizer.component.scss'
@@ -21,6 +24,7 @@ import {Task} from "../../../types/organizer.interface";
 export class OrganizerComponent implements OnInit {
 
   form: FormGroup | any
+  tasks: Task[] = []
 
   constructor( protected dateService: DateService,
                private tasksService: TasksService) {
@@ -28,6 +32,12 @@ export class OrganizerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dateService.date.pipe(
+      switchMap(value => this.tasksService.load(value))
+    ).subscribe(tasks => {
+      this.tasks = tasks
+    })
+
     this.form = new FormGroup({
       title: new FormControl('', Validators.required)
     })
@@ -41,8 +51,18 @@ export class OrganizerComponent implements OnInit {
     }
 
     this.tasksService.create(task).subscribe( {
-      next: (el) => console.log('new', el),
       error: (err) => console.error(err),
-      complete: () => this.form.reset()
-  })
-}}
+      complete: () => {
+        this.form.reset()
+        this.tasks.push(task)
+      }
+  })}
+  remove(task: Task) {
+    this.tasksService.remove(task).subscribe({
+      error: (err) => console.error(err),
+      complete: () => {
+        this.tasks = this.tasks.filter(el => el.id !== task.id)
+      }
+    })
+  }
+}
