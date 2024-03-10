@@ -33,3 +33,38 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   /*overflow-y: scroll;*/
 }
+:root {
+  --primary-color: #dc3545;
+  --dark-color: #333333;
+  --light-color: #f4f4f4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+
+  &:hover {
+    color: #666;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+
+.text-center {
+  text-align: center;
+}

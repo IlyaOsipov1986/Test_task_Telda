@@ -39,6 +39,41 @@ body {
   /*overflow-y: scroll;*/
 }
 
+:root {
+  --primary-color: #dc3545;
+  --dark-color: #333333;
+  --light-color: #f4f4f4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+a:hover {
+  color: #666;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -391,14 +426,80 @@ table td .selected {
   color: darkgreen;
   font-weight: bold;
 }
+table span {
+  font-size: 16px;
+  line-height: 110%;
+}
+
+section {
+  border: 1px solid #000;
+  padding: 1rem;
+}
+section header {
+  margin-bottom: 1rem;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+table th {
+  background: var(--light-color);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--light-color);
+  color: #333;
+  padding: 0.4rem 1.3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: opacity 0.2s;
+  outline: none;
+}
+.btn:disabled {
+  background: var(--dark-color);
+  color: #fff;
+  cursor: not-allowed;
+}
+.btn:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
 
 p {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 24px 24px 25px;
 }
 p span {
-  margin: 0 12px;
   width: 200px;
   text-align: center;
 }
