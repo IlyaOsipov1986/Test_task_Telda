@@ -24,6 +24,18 @@ export class TasksService {
       }))
   }
 
+  loadGetTasksAll(): Observable<Task[]> {
+    return this.http
+      .get<Task[]>(`${TasksService.url}.json`)
+      .pipe(map(tasks => {
+        if(!tasks) {
+          return []
+        }
+        // @ts-ignore
+        return Object.keys(tasks).map(key => ({...tasks[key], id: key}))
+      }))
+  }
+
   create(task: Task): Observable<Task> {
     return this.http
       .post<CreateResponse>(`${TasksService.url}/${task.date}.json`, task)
@@ -31,8 +43,17 @@ export class TasksService {
         return {...task, id: res.name}
       }))
   }
+
   remove(task: Task): Observable<void> {
     return this.http
       .delete<void>(`${TasksService.url}/${task.date}/${task.id}.json`)
+  }
+
+  execute(task: Task): Observable<Task> {
+    return this.http
+      .put<Task>(`${TasksService.url}/${task.date}/${task.id}.json`, {...task, active: true})
+      .pipe(map(res => {
+        return res
+      }))
   }
 }

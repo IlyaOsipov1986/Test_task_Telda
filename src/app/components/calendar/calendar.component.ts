@@ -4,6 +4,8 @@ import {DateService} from "../../shared/date.service";
 import moment from "moment";
 import {NgForOf} from "@angular/common";
 import {MomentPipe} from "../../shared/moment.pipe";
+import {TasksService} from "../../shared/tasks.service";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: 'app-calendar',
@@ -18,11 +20,45 @@ import {MomentPipe} from "../../shared/moment.pipe";
 
 export class CalendarComponent implements OnInit {
 
+  tasks: (string | undefined)[] = []
   calendar: Week[] | undefined;
 
-  constructor(private dateService: DateService) {}
+  constructor(private dateService: DateService,
+              private tasksService: TasksService) {}
 
   ngOnInit() {
+    this.dateService.date.pipe(
+      switchMap(value => this.tasksService.loadGetTasksAll())
+    ).subscribe(tasks => {
+      this.tasks = tasks.map(el => el.id)
+
+      function handleCalendarUpdate(tasks: (string | undefined)[], calendarDays: Week[] | undefined) {
+
+        const formatDateTask = tasks.map(task => {
+          let charDay = task?.substring(2, 0)
+          let charMonth= task?.substring(3, 5)
+          let charYear= task?.substring(6, 10)
+          return `${charMonth}/${charDay}/${charYear}`
+        })
+
+        if(!tasks) {
+          return calendarDays
+        }
+
+        calendarDays?.forEach(el => {
+          el.days.forEach(day => {
+            if(formatDateTask.find(date => date === day.value.format('L'))) {
+              day.active = true
+            }
+          })
+        })
+
+        return calendarDays
+      }
+
+      const updateCalendar: Week[] | undefined = handleCalendarUpdate(this.tasks, this.calendar)
+      return this.calendar = updateCalendar
+    })
     this.dateService.date.subscribe(this.generate.bind(this))
   }
 
@@ -51,4 +87,5 @@ export class CalendarComponent implements OnInit {
   select(day: moment.Moment) {
     this.dateService.changeDate(day)
   }
+
 }

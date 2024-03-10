@@ -43,6 +43,7 @@ body {
   --primary-color: #dc3545;
   --dark-color: #333333;
   --light-color: #f4f4f4;
+  --success-color: #4ED4A9;
 }
 
 * {
@@ -64,7 +65,7 @@ ul {
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1544px;
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
@@ -407,24 +408,26 @@ table td, table th {
   border: 1px solid black;
   padding: 10px 10px;
 }
+table td.active {
+  color: var(--primaty-color);
+  font-weight: bold;
+  background-color: darkred;
+}
+table td.selected {
+  color: black;
+  font-weight: bold;
+  background: darkgreen;
+}
+table td:hover:not(.disabled) {
+  background: lightgray;
+  cursor: pointer;
+}
 table td {
   text-align: center;
   transition: all 0.2s;
 }
 table td.disabled {
   opacity: 0.5;
-}
-table td:hover:not(.disabled) {
-  background: lightgray;
-  cursor: pointer;
-}
-table td .active {
-  color: var(--primaty-color);
-  font-weight: bold;
-}
-table td .selected {
-  color: darkgreen;
-  font-weight: bold;
 }
 table span {
   font-size: 16px;
@@ -433,10 +436,26 @@ table span {
 
 section {
   border: 1px solid #000;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 16px 16px;
 }
-section header {
-  margin-bottom: 1rem;
+
+.organizer-select-data {
+  font-size: 16px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.organizer-add-task {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.organizer-list-task-title {
+  margin-bottom: 10px;
+  font-size: 16px;
 }
 
 .task {
@@ -446,6 +465,10 @@ section header {
   padding: 0.5rem 1rem;
   border: 1px solid #ccc;
   margin-bottom: 0.5rem;
+}
+
+.task-name {
+  font-size: 16px;
 }
 
 .form-input {
@@ -473,6 +496,7 @@ table th {
   margin-right: 0.5rem;
   transition: opacity 0.2s;
   outline: none;
+  border-radius: 6px;
 }
 .btn:disabled {
   background: var(--dark-color);
@@ -489,8 +513,23 @@ table th {
 }
 
 .btn-primary {
+  font-size: 16px;
   background: var(--primary-color);
   color: #fff;
+}
+
+.btn-success {
+  background: var(--success-color);
+  color: #fff;
+  font-size: 16px;
+}
+
+.text-message-empty-task {
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 133%;
+  margin-top: 10px;
 }
 
 p {

@@ -6,28 +6,27 @@ table {
   td, th {
     border: 1px solid black;
     padding: 10px 10px;
-    }
+  }
+  td.active {
+    color: var(--primaty-color);
+    font-weight: bold;
+    background-color: darkred;
+  }
+  td.selected {
+      color: black;
+      font-weight: bold;
+      background: darkgreen;
+  }
+  td:hover:not(.disabled) {
+    background: lightgray;
+    cursor: pointer;
+  }
   td {
     text-align: center;
     transition: all .2s;
 
     &.disabled {
       opacity: 0.5;
-    }
-
-    &:hover:not(.disabled) {
-      background: lightgray;
-      cursor: pointer;
-    }
-
-    .active {
-      color: var(--primaty-color);
-      font-weight: bold;
-    }
-
-    .selected {
-      color: darkgreen;
-      font-weight: bold;
     }
   }
   span {

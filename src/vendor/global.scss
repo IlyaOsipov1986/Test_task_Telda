@@ -37,6 +37,7 @@ body {
   --primary-color: #dc3545;
   --dark-color: #333333;
   --light-color: #f4f4f4;
+  --success-color: #4ED4A9;
 }
 
 * {
@@ -59,7 +60,7 @@ ul {
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1544px;
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
