@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import "vendor/global";
+@import "vendor/normalize";
+@import "app/app.component.scss";
+@import "app/components/calendar/calendar.component.scss";
+@import "app/components/organizer/organizer.component.scss";
+@import "app/components/selector/selector.component.scss";

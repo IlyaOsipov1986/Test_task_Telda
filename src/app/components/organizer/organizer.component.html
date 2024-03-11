@@ -1,0 +1,46 @@
+<section>
+  <div class="organizer-select-data">
+    Выбранная дата: <strong>{{ dateService.date | async | moment: 'DD.MM.YYYY' }}</strong>
+  </div>
+  <div *ngIf="tasks.length || taskActive.length; else noTasks">
+    <div *ngIf="tasks.length">
+      <h5 class="organizer-list-task-title">Текущие задачи</h5>
+      <ul>
+        <li class="task" *ngFor="let task of tasks; let i = index">
+        <span class="task-name">
+          <strong>{{ i + 1 }}</strong>
+          {{ task.titleTask}}
+        </span>
+          <div>
+            <button class="btn btn-success" (click)="execute(task)">Выполнить</button>
+            <button class="btn btn-primary" (click)="remove(task)">Удалить</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="taskActive.length">
+      <h5 class="organizer-list-task-title">Выполненные задачи</h5>
+      <ul>
+        <li class="task" *ngFor="let task of taskActive; let i = index">
+        <span class="task-name">
+          <strong>{{ i + 1 }}</strong>
+          {{ task.titleTask}}
+        </span>
+          <div>
+            <button class="btn btn-primary" (click)="remove(task)">Удалить</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <ng-template #noTasks>
+    <div class="text-message-empty-task">Пока ещё нет созданных задач...</div>
+  </ng-template>
+  <div>
+    <label class="organizer-add-task">Новая задача</label>
+    <form (ngSubmit)="submit()" [formGroup]="form">
+      <input type="text" class="form-input" formControlName="title">
+      <button type="submit" class="btn btn-success btn-block" [disabled]="form.invalid">Добавить</button>
+    </form>
+  </div>
+</section>
